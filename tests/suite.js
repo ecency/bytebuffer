@@ -16,8 +16,8 @@
 
 var ByteBuffer = require("../dist/bytebuffer-node.js");
 var ByteBufferNode = ByteBuffer;
-var ByteBufferBrowser = require("../dist/bytebuffer.min.js");
-var ByteBufferBrowser_DataView = require("../dist/bytebuffer-dataview.min.js");
+var ByteBufferBrowser = require("../dist/bytebuffer.js");
+var ByteBufferBrowser_DataView = require("../dist/bytebuffer-dataview.js");
 var pkg = require("../package.json");
 
 /**

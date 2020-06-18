@@ -1,5 +1,5 @@
 {
-  "name": "bytebuffer",
+  "name": "@exodus/bytebuffer",
   "version": "5.0.1",
   "author": "Daniel Wirtz <dcode@dcode.io>",
   "description": "The swiss army knife for binary data in JavaScript.",

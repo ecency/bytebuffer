@@ -29,7 +29,7 @@ module.exports = (function() {
         Long = require("long"),
         memcpy = null; try { memcpy = require("memcpy"); } catch (e) {}
 
-    //? include("ByteBuffer.js");
+    //? include("bytebuffer.js");
 
     /**
      * node-memcpy. This is an optional binding dependency and may not be present.

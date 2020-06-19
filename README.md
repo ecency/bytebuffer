@@ -1,3 +1,13 @@
+## Fork Notes:
+
+- Based off of upstream master instead of upstream latest release, because tests were broken on the latest release.
+- Removed `new Buffer()` usage.
+- Dropped super old Node version support to use `Buffer.alloc`/`Buffer.from`.
+- Removed minified/gzipped builds.
+- Added `files` to `package.json` for smaller package size.
+
+---
+
 ![bytebuffer.js - The swiss army knife for binary data in JavaScript.](https://raw.github.com/dcodeIO/bytebuffer.js/master/bytebuffer.png)
 ======================================
 A fast and complete ByteBuffer implementation using either ArrayBuffers in the browser or node Buffers under node.js,

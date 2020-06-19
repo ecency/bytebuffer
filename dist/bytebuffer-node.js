@@ -60,7 +60,7 @@ module.exports = (function() {
          * @type {!Buffer}
          * @expose
          */
-        this.buffer = capacity === 0 ? EMPTY_BUFFER : new Buffer(capacity);
+        this.buffer = capacity === 0 ? EMPTY_BUFFER : Buffer.alloc(capacity);
 
         /**
          * Absolute read/write offset.
@@ -185,7 +185,7 @@ module.exports = (function() {
      * @type {!Buffer}
      * @inner
      */
-    var EMPTY_BUFFER = new Buffer(0);
+    var EMPTY_BUFFER = Buffer.alloc(0);
 
     /**
      * String.fromCharCode reference for compile-time renaming.
@@ -354,7 +354,7 @@ module.exports = (function() {
             k = 0,
             b;
         if (buffer instanceof Uint8Array) { // Extract bytes from Uint8Array
-            b = new Buffer(buffer.length);
+            b = Buffer.alloc(buffer.length);
             if (memcpy) { // Fast
                 memcpy(b, 0, buffer.buffer, buffer.byteOffset, buffer.byteOffset + buffer.length);
             } else { // Slow
@@ -363,7 +363,7 @@ module.exports = (function() {
             }
             buffer = b;
         } else if (buffer instanceof ArrayBuffer) { // Convert ArrayBuffer to Buffer
-            b = new Buffer(buffer.byteLength);
+            b = Buffer.alloc(buffer.byteLength);
             if (memcpy) { // Fast
                 memcpy(b, 0, buffer, 0, buffer.byteLength);
             } else { // Slow
@@ -376,7 +376,7 @@ module.exports = (function() {
         } else if (!(buffer instanceof Buffer)) { // Create from octets if it is an error, otherwise fail
             if (Object.prototype.toString.call(buffer) !== "[object Array]")
                 throw TypeError("Illegal buffer");
-            buffer = new Buffer(buffer);
+            buffer = Buffer.from(buffer);
         }
         bb = new ByteBuffer(0, littleEndian, noAssert);
         if (buffer.length > 0) { // Avoid references to more than one EMPTY_BUFFER
@@ -1283,8 +1283,8 @@ module.exports = (function() {
             this.resize((capacity8 *= 2) > offset ? capacity8 : offset);
         offset -= 4;
         this.littleEndian
-            ? this.buffer.writeFloatLE(value, offset, true)
-            : this.buffer.writeFloatBE(value, offset, true);
+            ? this.buffer.writeFloatLE(value, offset)
+            : this.buffer.writeFloatBE(value, offset);
         if (relative) this.offset += 4;
         return this;
     };
@@ -1358,8 +1358,8 @@ module.exports = (function() {
             this.resize((capacity9 *= 2) > offset ? capacity9 : offset);
         offset -= 8;
         this.littleEndian
-            ? this.buffer.writeDoubleLE(value, offset, true)
-            : this.buffer.writeDoubleBE(value, offset, true);
+            ? this.buffer.writeDoubleLE(value, offset)
+            : this.buffer.writeDoubleBE(value, offset);
         if (relative) this.offset += 8;
         return this;
     };
@@ -1391,8 +1391,8 @@ module.exports = (function() {
                 throw RangeError("Illegal offset: 0 <= "+offset+" (+"+8+") <= "+this.buffer.length);
         }
         var value = this.littleEndian
-            ? this.buffer.readDoubleLE(offset, true)
-            : this.buffer.readDoubleBE(offset, true);
+            ? this.buffer.readDoubleLE(offset)
+            : this.buffer.readDoubleBE(offset);
         if (relative) this.offset += 8;
         return value;
     };
@@ -2320,7 +2320,7 @@ module.exports = (function() {
     ByteBufferPrototype.clone = function(copy) {
         var bb = new ByteBuffer(0, this.littleEndian, this.noAssert);
         if (copy) {
-            var buffer = new Buffer(this.buffer.length);
+            var buffer = Buffer.alloc(this.buffer.length);
             this.buffer.copy(buffer);
             bb.buffer = buffer;
         } else {
@@ -2364,7 +2364,7 @@ module.exports = (function() {
             this.limit = 0;
             return this;
         }
-        var buffer = new Buffer(len);
+        var buffer = Buffer.alloc(len);
         this.buffer.copy(buffer, 0, begin, end);
         this.buffer = buffer;
         if (this.markedOffset >= 0) this.markedOffset -= begin;
@@ -2603,7 +2603,7 @@ module.exports = (function() {
         if (len <= 0) return this; // Nothing to prepend
         var diff = len - offset;
         if (diff > 0) { // Not enough space before offset, so resize + move
-            var buffer = new Buffer(this.buffer.length + diff);
+            var buffer = Buffer.alloc(this.buffer.length + diff);
             this.buffer.copy(buffer, len, offset, this.buffer.length);
             this.buffer = buffer;
             this.offset += diff;
@@ -2691,7 +2691,7 @@ module.exports = (function() {
                 throw RangeError("Illegal capacity: 0 <= "+capacity);
         }
         if (this.buffer.length < capacity) {
-            var buffer = new Buffer(capacity);
+            var buffer = Buffer.alloc(capacity);
             this.buffer.copy(buffer);
             this.buffer = buffer;
         }
@@ -2790,7 +2790,7 @@ module.exports = (function() {
                 throw RangeError("Illegal range: 0 <= "+offset+" <= "+limit+" <= "+this.buffer.length);
         }
         if (forceCopy) {
-            var buffer = new Buffer(limit - offset);
+            var buffer = Buffer.alloc(limit - offset);
             this.buffer.copy(buffer, 0, offset, limit);
             return buffer;
         } else {
@@ -2896,7 +2896,7 @@ module.exports = (function() {
      * @expose
      */
     ByteBuffer.fromBase64 = function(str, littleEndian) {
-        return ByteBuffer.wrap(new Buffer(str, "base64"), littleEndian);
+        return ByteBuffer.wrap(Buffer.from(str, "base64"), littleEndian);
         return bb;
     };
 
@@ -2952,7 +2952,7 @@ module.exports = (function() {
      * @expose
      */
     ByteBuffer.fromBinary = function(str, littleEndian) {
-        return ByteBuffer.wrap(new Buffer(str, "binary"), littleEndian);
+        return ByteBuffer.wrap(Buffer.from(str, "binary"), littleEndian);
         return bb;
     };
 
@@ -3185,7 +3185,7 @@ module.exports = (function() {
                 throw TypeError("Illegal str: Length not a multiple of 2");
         }
         var bb = new ByteBuffer(0, littleEndian, true);
-        bb.buffer = new Buffer(str, "hex");
+        bb.buffer = Buffer.from(str, "hex");
         bb.limit = bb.buffer.length;
         return bb;
     };
@@ -3429,7 +3429,7 @@ module.exports = (function() {
             if (typeof str !== 'string')
                 throw TypeError("Illegal str: Not a string");
         var bb = new ByteBuffer(0, littleEndian, noAssert);
-        bb.buffer = new Buffer(str, "utf8");
+        bb.buffer = Buffer.from(str, "utf8");
         bb.limit = bb.buffer.length;
         return bb;
     };

@@ -1,6 +1,6 @@
 {
     "name": "bytebuffer",
-    "version": "6.0.0-exodus.1",
+    "version": "6.0.0-exodus.2",
     "author": "Daniel Wirtz <dcode@dcode.io>",
     "description": "A full-featured ByteBuffer implementation using typed arrays.",
     "main": "dist/bytebuffer.js",

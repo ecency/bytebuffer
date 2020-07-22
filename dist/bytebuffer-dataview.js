@@ -124,7 +124,7 @@
      * @const
      * @expose
      */
-    ByteBuffer.VERSION = "6.0.0-exodus.1";
+    ByteBuffer.VERSION = "6.0.0-exodus.2";
 
     /**
      * Little endian constant that can be used instead of its boolean value. Evaluates to `true`.

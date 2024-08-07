@@ -1,6 +1,6 @@
 {
-  "name": "@exodus/bytebuffer",
-  "version": "6.0.0-exodus.2",
+  "name": "@ecency/bytebuffer",
+  "version": "6.0.0",
   "author": "Daniel Wirtz <dcode@dcode.io>",
   "description": "The swiss army knife for binary data in JavaScript.",
   "main": "dist/bytebuffer-node.js",

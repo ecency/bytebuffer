@@ -1,5 +1,5 @@
 {
-    "name": "@ecency/bytebuffer",
+    "name": "bytebuffer",
     "version": "6.0.0",
     "author": "Daniel Wirtz <dcode@dcode.io>",
     "description": "A full-featured ByteBuffer implementation using typed arrays.",
